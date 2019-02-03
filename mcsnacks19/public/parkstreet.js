@@ -61,7 +61,7 @@ function create(){
     player = this.physics.add.sprite(100, 450, 'dude');
     player.setBounce(0.2);
     player.body.setGravityY(1200);
-    
+
     // Colliders so things work
     this.physics.add.collider(player, platforms);
     this.physics.add.overlap(player, stars, collectStar, null, this);
@@ -121,7 +121,7 @@ function update(){
         player.setVelocityX(0);
         player.anims.play('turn');
     }
-  
+
     // Check for jump
     if (cursors.up.isDown && player.body.touching.down){
         player.setVelocityY(-1000);
@@ -132,7 +132,8 @@ function update(){
         player.setTint(0xff0000);
         player.anims.play('turn');
         gameOver = true;
-        this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
+        this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
+        sessionStorage.setItem("govcenter", "fail");
         exit();
     }
 
@@ -223,7 +224,8 @@ function boomBoyByeFoop(player, bomb) {
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
-    this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
+    this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
+    sessionStorage.setItem("parkstreet", "fail");
     exit();
 }
 

@@ -60,7 +60,7 @@ function create(){
     } else {
       color = 0x000000;
     }
-    government_center = this.add.circle(2148, 1188.5, 15, 0x000000);
+    government_center = this.add.circle(2148, 1188.5, 15, color);
     government_center.name = 'Government Center'
     government_center.file = 'govcenter'
     levels.add(government_center);
@@ -72,7 +72,7 @@ function create(){
     } else {
       color = 0x000000;
     }
-    park_street = this.add.circle(1983, 1355, 15, 0x000000);
+    park_street = this.add.circle(1983, 1355, 15, color);
     park_street.name = 'Park Street'
     park_street.file = 'parkstreet'
     levels.add(park_street);
