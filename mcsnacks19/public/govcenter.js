@@ -123,7 +123,7 @@ function update() {
 function collectStar(player, star) {
   star.disableBody(true, true);
   score += 5;
-  scoreText.setText('ScOrE: ' + score);
+  scoreText.setText('Score: ' + score);
 
   if (stars.countActive(true) === 0) {
     stars.children.iterate(function (child) {
