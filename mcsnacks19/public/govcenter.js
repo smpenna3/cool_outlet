@@ -144,4 +144,16 @@ function boomBoyByeFoop(player, bomb) {
   player.setTint(0xff0000);
   player.anims.play('turn');
   gameOver = true;
+
+  exit();
+}
+
+async function exit(){
+  await sleep(2000);
+
+  window.location.href = '/map'
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
