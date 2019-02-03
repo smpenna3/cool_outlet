@@ -20,8 +20,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload(){
-    this.load.image('map', 'map.png');  
-    this.load.image('player', 'player.png');    
+    this.load.image('map', 'map.png');
+    this.load.image('player', 'player.png');
 }
 
 function create(){
@@ -30,7 +30,7 @@ function create(){
     //this.cameras.main.setBounds(0, 0, 3500, 3500);
 
     player = this.physics.add.image(1982, 1123, 'player');
-    
+
     this.cameras.main.startFollow(player, true);
     //this.cameras.main.setZoom(1.5);
 
@@ -119,27 +119,27 @@ function update(){
     if(cursors.up.isDown && cursors.right.isDown){
         player.setVelocityY(-velocity);
         player.setVelocityX(velocity);
-        player.rotation = -45;
+        player.rotation = -0.79;
     }
     else if(cursors.up.isDown && cursors.left.isDown){
         player.setVelocityY(-velocity);
         player.setVelocityX(-velocity);
-        player.rotation = 45;
+        player.rotation = -2.36;
     }
     else if(cursors.down.isDown && cursors.right.isDown){
         player.setVelocityY(velocity);
         player.setVelocityX(velocity);
-        player.rotation = 45;
+        player.rotation = 0.79;
     }
     else if(cursors.down.isDown && cursors.left.isDown){
         player.setVelocityY(velocity);
         player.setVelocityX(-velocity);
-        player.rotation = -45;
+        player.rotation = 2.36;
     }
     else if (cursors.up.isDown){
         player.setVelocityY(-velocity);
         player.setVelocityX(0);
-        player.rotation = 1.57;
+        player.rotation = -1.57;
     }
     else if (cursors.down.isDown){
         player.setVelocityY(velocity);
@@ -149,7 +149,7 @@ function update(){
     else if (cursors.left.isDown){
         player.setVelocityX(-velocity);
         player.setVelocityY(0);
-        player.rotation = 0;
+        player.rotation = 3.14;
     }
     else if (cursors.right.isDown){
         player.setVelocityX(velocity);
