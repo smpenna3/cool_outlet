@@ -1,0 +1,27 @@
+{
+	"name": "bouncy-dude",
+	"version": "0.0.1",
+	"description": "A dude who bounces",
+	"engines": {
+		"node": "8.x"
+	},
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"express": "^4.16.4"
+	},
+	"devDependencies": {
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/smpenna3/cool_outlet"
+	},
+	"keywords": [
+		"node",
+		"heroku",
+		"express"
+	],
+	"license": "MIT"
+}
