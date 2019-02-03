@@ -27,6 +27,10 @@ function preload() {
   );
   this.load.image('briefcase', 'assets/briefcase.png');
   this.load.image('portal', 'assets/portal.png')
+
+  this.load.spritesheet('slime', 'assets/DungeonSlime.png',
+    { frameWidth: 20, frameHeight: 28 }
+  );
 }
 
 function create() {
@@ -68,6 +72,20 @@ function create() {
     repeat: -1
   });
 
+  this.anims.create({
+    key: 'right',
+    frames: this.anims.generateFrameNumbers('slime', { start: 0, end: 2 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
+  this.anims.create({
+    key: 'left',
+    frames: this.anims.generateFrameNumbers('slime', { start: 2, end: 5 }),
+    frameRate: 10,
+    repeat: -1
+  });
+
   this.physics.add.overlap(player, briefcase, getBriefcase, null, this);
 }
 
@@ -98,7 +116,7 @@ function getBriefcase(player, briefcase) {
   // Make the portal out
   portal = this.physics.add.staticGroup();
   portal.create(50, 500, 'portal').setScale(0.3);
-  
+
   this.physics.add.overlap(player, portal, portalOut, null, this);
 }
 
