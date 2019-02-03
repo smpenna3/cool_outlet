@@ -38,6 +38,8 @@ function preload() {
 
 function create() {
   this.add.image(400, 300, 'sky');
+  instr = this.add.text(30, 207, 'Get your briefcase back!', {fontSize:'15px'});
+  this.add.text(525, 320, 'Watch out!', {fontSize:'20px'});
 
   platforms = this.physics.add.staticGroup();
   platforms.create(400, 603, 'ground').setScale(2).refreshBody();
@@ -139,6 +141,9 @@ function getBriefcase(player, briefcase) {
   // Make the portal out
   portal = this.physics.add.staticGroup();
   portal.create(50, 500, 'portal');
+
+  // Change instructions
+  instr.setText('Back to the T!')
 
   this.physics.add.overlap(player, portal, portalOut, null, this);
 }
