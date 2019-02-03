@@ -46,12 +46,26 @@ function create(){
     // Bowdoin
     bowdoin = this.add.circle(1983, 1022, 15, 0x000000);
     bowdoin.name = 'Bowdoin'
+    bowdoin.file = 'bowdoin.html'
     levels.add(bowdoin);
 
     // Government center
-    government_center = this.add.circle(2148, 1187, 15, 0x000000);
+    government_center = this.add.circle(2148, 1188.5, 15, 0x000000);
     government_center.name = 'Government Center'
+    government_center.file = 'govcenter.html'
     levels.add(government_center);
+
+    // Park Street
+    park_street = this.add.circle(1983, 1355, 15, 0x000000);
+    park_street.name = 'Park Street'
+    park_street.file = 'parkstreet.html'
+    levels.add(park_street);
+
+    // Haymarket
+    haymarket = this.add.circle(2313, 1022, 15, 0x000000);
+    haymarket.name = 'Haymarket'
+    haymarket.file = 'haymarket.html'
+    levels.add(haymarket);
 
     // Setup collider
     this.physics.add.overlap(player, levels, selectlevel, null, this);
@@ -60,6 +74,10 @@ function create(){
 function selectlevel(player, level){
     //console.log(player);
     console.log(level.name);
+
+    if(confirm('Do you want to go to '+level.name+'?')){
+        console.log('Moving to '+level.file);
+    }
 }
 
 function update(){
@@ -80,6 +98,13 @@ function update(){
         player.setVelocityX(velocity)
     }
     else{
+        player.setVelocityX(0);
+    }
+
+    if(cursors.space.isDown){
+        player.x = 1982;
+        player.x = 1123;
+        player.setVelocityY(0);
         player.setVelocityX(0);
     }
 }
