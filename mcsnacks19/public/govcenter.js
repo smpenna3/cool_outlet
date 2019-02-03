@@ -36,6 +36,7 @@ var platforms;
 
 function create() {
   this.add.image(400, 300, 'sky');
+  instr = this.add.text(500, 350, 'Get 175 to win!', {fontSize:'20px'})
 
   platforms = this.physics.add.staticGroup();
   platforms.create(400, 603, 'ground').setScale(2).refreshBody();
@@ -129,6 +130,8 @@ function collectStar(player, star) {
     stars.children.iterate(function (child) {
       child.enableBody(true, child.x, 0, true, true);
     });
+
+    instr.visible = false;
 
     var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
