@@ -1,11 +1,11 @@
 var config = {
   type: Phaser.AUTO,
   width: 800,
-  height: 666,
+  height: 600,
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: {y: 333 },
+      gravity: {y: 300 },
       debug: false
     }
   },
@@ -35,7 +35,7 @@ function preload() {
 var platforms;
 
 function create() {
-  this.add.image(400, 333, 'sky');
+  this.add.image(400, 300, 'sky');
 
   platforms = this.physics.add.staticGroup();
   platforms.create(400, 603, 'ground').setScale(2).refreshBody();
@@ -144,7 +144,7 @@ function boomBoyByeFoop(player, bomb) {
   player.setTint(0xff0000);
   player.anims.play('turn');
   gameOver = true;
-
+  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
   exit();
 }
 
