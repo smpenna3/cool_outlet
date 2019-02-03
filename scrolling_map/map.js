@@ -161,4 +161,11 @@ function update(){
         player.setVelocityX(0);
         player.setVelocityY(0);
     }
+
+    if(cursors.space.isDown){
+        this.cameras.main.zoom = 0.2;
+    }
+    else{
+        this.cameras.main.zoom = 1;
+    }
 }
