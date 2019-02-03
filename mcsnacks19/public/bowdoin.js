@@ -136,7 +136,7 @@ function getBriefcase(player, briefcase) {
 
   // Make the portal out
   portal = this.physics.add.staticGroup();
-  portal.create(50, 500, 'portal').setScale(0.3);
+  portal.create(50, 500, 'portal');
 
   this.physics.add.overlap(player, portal, portalOut, null, this);
 }
