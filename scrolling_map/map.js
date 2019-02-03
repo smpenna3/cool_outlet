@@ -1,57 +1,67 @@
+var velocity = 300;
+
 var config = {
     type: Phaser.AUTO,
-    width: 3500,
-    height: 3500,
+    width: 900,
+    height: 900,
     physics: {
-      default: 'arcade',
-      arcade: {
-        gravity: {y: 333 },
+        default: 'arcade',
+        arcade: {
         debug: false
-      }
+        }
     },
     scene: {
-      preload: preload,
-      create: create,
-      update: update,
-      render: render
+        preload: preload,
+        create: create,
+        update: update,
+        render: render
     }
-  };
+};
 
 var game = new Phaser.Game(config);
 
 function preload(){
-    game.load.image('map', 'map.png');
-
-    
+    this.load.image('map', 'map.png');  
+    this.load.image('player', 'player.png');    
 }
 
 function create(){
     this.add.image(1750, 1750, 'map');
-    // Set the background color for behind the map
-    game.stage.backgroundColor = '#2d2d2d';
 
-    //  Make our game world 3500x3500, the image is 3300x3300
-    game.world.setBounds(0, 0, 3500, 3500);
+    //this.cameras.main.setBounds(0, 0, 3500, 3500);
 
-    cursors = game.input.keyboard.createCursorKeys();
+    player = this.physics.add.image(1982, 1123, 'player');
+    //player = this.add.circle(1982, 1123, 20, 0xf0f000)
+
+    this.cameras.main.startFollow(player, true);
+    //this.cameras.main.setZoom(1.5);
+
+    cursors = this.input.keyboard.createCursorKeys();
+
+    this.add.circle(1983, 1022, 15, 0x000000)
 }
 
 function update(){
     if (cursors.up.isDown){
-        game.camera.y -= 4;
+        player.setVelocityY(-velocity)
     }
     else if (cursors.down.isDown){
-        game.camera.y += 4;
+        player.setVelocityY(velocity)
+    }
+    else{
+        player.setVelocityY(0);
     }
 
     if (cursors.left.isDown){
-        game.camera.x -= 4;
+        player.setVelocityX(-velocity)
     }
     else if (cursors.right.isDown){
-        game.camera.x += 4;
+        player.setVelocityX(velocity)
+    }
+    else{
+        player.setVelocityX(0);
     }
 }
 
 function render(){
-    game.debug.cameraInfo(game.camera, 32, 32);
 }
