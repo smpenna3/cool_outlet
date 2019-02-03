@@ -123,7 +123,7 @@ function update() {
 function collectStar(player, star) {
   star.disableBody(true, true);
   score += 5;
-  scoreText.setText('ScOrE: ' + score);
+  scoreText.setText('Score: ' + score);
 
   if (stars.countActive(true) === 0) {
     stars.children.iterate(function (child) {
@@ -136,6 +136,25 @@ function collectStar(player, star) {
     bomb.setBounce(1);
     bomb.setCollideWorldBounds(true);
     bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+
+    // Comment
+    // Move the platforms
+    num_platforms = platforms.children.entries.length;
+
+    // Disable all platforms except the last
+    for(i = 1; i < num_platforms; i++){
+      platforms.children.entries[i].disableBody(true, true);
+    }
+
+    // Create new platforms
+    num_to_create = Math.round(Phaser.Math.FloatBetween(1, 4));
+    console.log('Creating ' + num_to_create.toString() + ' platforms');
+    for(i = 1; i < num_to_create; i++){
+      x = Math.round(Phaser.Math.FloatBetween(0, 800));
+      y = Math.round(Phaser.Math.FloatBetween(60, 540));
+      console.log('Creating at ('+x.toString()+','+y.toString()+')');
+      platforms.create(x, y, 'ground');
+    }
   }
 }
 
@@ -144,8 +163,9 @@ function boomBoyByeFoop(player, bomb) {
   player.setTint(0xff0000);
   player.anims.play('turn');
   gameOver = true;
-  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
-  status = (score > 175) ? "complete" : "fail";
+  msg = (score > 175) ? "YOU WIN" : "YOU LOSE";
+  this.add.text(400, 300, msg, {fontsize:'128px', fill:0xff0000});
+  status = (msg == "YOU WIN") ? "complete" : "fail";
   sessionStorage.setItem("govcenter", status);
   exit();
 }
