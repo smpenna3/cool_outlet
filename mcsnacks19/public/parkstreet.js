@@ -129,6 +129,7 @@ function update(){
 
     // Check if you fell off
     if(player.y > 680){
+        this.physics.pause();
         player.setTint(0xff0000);
         player.anims.play('turn');
         gameOver = true;
