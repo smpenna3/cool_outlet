@@ -54,12 +54,24 @@ function create(){
     levels.add(bowdoin);
 
     // Government center
+    status = sessionStorage.getItem('govcenter');
+    if (status == 'complete') {
+      color = 0x31c438;
+    } else {
+      color = 0x000000;
+    }
     government_center = this.add.circle(2148, 1188.5, 15, 0x000000);
     government_center.name = 'Government Center'
     government_center.file = 'govcenter'
     levels.add(government_center);
 
     // Park Street
+    status = sessionStorage.getItem('parkstreet');
+    if (status == 'complete') {
+      color = 0x31c438;
+    } else {
+      color = 0x000000;
+    }
     park_street = this.add.circle(1983, 1355, 15, 0x000000);
     park_street.name = 'Park Street'
     park_street.file = 'parkstreet'
