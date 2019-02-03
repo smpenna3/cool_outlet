@@ -37,8 +37,8 @@ function preload(){
 
 function create(){
     this.add.image(400, 300, 'sky');
-    this.add.text(150, 400, 'Watch out for \nspikes and bombs!', {fontsize:'128px'})
-    this.add.text(450, 400, 'Collect stars!', {fontsize:'128px'})
+    this.add.text(100, 400, 'Watch out for \nspikes and bombs!', {fontSize:'40px'})
+    this.add.text(550, 300, 'Collect stars!', {fontSize:'40px'})
 
     // Create a static group to hold the platforms
     platforms = this.physics.add.staticGroup();
@@ -98,7 +98,7 @@ function create(){
     cam = this.cameras.main
 
     // Setup score text
-    scoreText = this.add.text(10, 50, 'Score: 0', {fontSize:'36px', fill:'#301'}).setScrollFactor(0, 1);
+    scoreText = this.add.text(10, 30, 'Score: 0', {fontSize:'36px', fill:'#301'}).setScrollFactor(0, 1).setDepth(2);
 }
 
 var current_chunk = 0;
@@ -173,7 +173,7 @@ function generate_chunk(that){
     console.log('Creating ' + num_of_stars.toString() + ' stars');
     for(i = 0; i < num_of_stars; i++){
         x = Math.round(Phaser.Math.FloatBetween(0, 800))+(current_chunk+1)*800;
-        stars.create(x, 0, 'star');
+        stars.create(x, 0, 'star').setBounceY(Phaser.Math.FloatBetween(0.8, 0.999));
     }
 
     // Add spikes
@@ -184,12 +184,15 @@ function generate_chunk(that){
         y = Math.round(Phaser.Math.FloatBetween(0, 1))
         if(y == 0){y = 0}
         else{y = 550}
-        console.log('Creating at x='+x.toString());
+        //console.log('Creating at ('+x.toString()+','+y.toString()+')');
         spikes.create(x, y, 'spikes');
     }
     spikes.children.iterate(function (child){
         child.setDepth(1);
     })
+
+    // Add bombs
+    
 
     // Increase the chunks
     current_chunk += 1;
