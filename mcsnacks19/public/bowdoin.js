@@ -26,6 +26,7 @@ function preload() {
       { frameWidth: 32, frameHeight: 48 }
   );
   this.load.image('briefcase', 'assets/briefcase.png');
+  this.load.image('portal', 'assets/portal.png')
 }
 
 function create() {
@@ -93,4 +94,14 @@ function update() {
 
 function getBriefcase(player, briefcase) {
   briefcase.disableBody(true, true);
+
+  // Make the portal out
+  portal = this.physics.add.staticGroup();
+  portal.create(50, 500, 'portal').setScale(0.3);
+  
+  this.physics.add.overlap(player, portal, portalOut, null, this);
+}
+
+function portalOut(player, portal){
+  window.location.href = '/map'
 }
