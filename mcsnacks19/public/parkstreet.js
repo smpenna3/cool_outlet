@@ -26,6 +26,9 @@ function preload(){
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
+    this.load.image('spikes', 'assets/spikes.png');
+    this.load.image('large_cloud', 'assets/cloud_large.png');
+    this.load.image('small_cloud', 'assets/cloud_small.png');
     this.load.spritesheet('dude',
         'assets/dude.png',
         { frameWidth: 32, frameHeight: 48 }
@@ -34,15 +37,24 @@ function preload(){
 
 function create(){
     this.add.image(400, 300, 'sky');
+    this.add.text(150, 400, 'Watch out for \nspikes and bombs!', {fontsize:'128px'})
+    this.add.text(450, 400, 'Collect stars!', {fontsize:'128px'})
 
     // Create a static group to hold the platforms
     platforms = this.physics.add.staticGroup();
+    platforms.create(400, 603, 'ground').setScale(2).refreshBody();
 
     // Create group to hold the stars
     stars = this.physics.add.group();
 
     // Create group to hold the bombs
     bombs = this.physics.add.group();
+
+    // Create a group to hold the spikes
+    spikes = this.physics.add.group();
+
+    // Create a group to hold the clouds
+    clouds = this.physics.add.group();
 
     // Create the player object
     player = this.physics.add.sprite(100, 450, 'dude');
@@ -53,7 +65,11 @@ function create(){
     this.physics.add.collider(player, platforms);
     this.physics.add.overlap(player, stars, collectStar, null, this);
     this.physics.add.collider(bombs, platforms);
+    this.physics.add.collider(platforms, spikes);
     this.physics.add.collider(player, bombs, boomBoyByeFoop, null, this);
+    this.physics.add.collider(player, spikes, boomBoyByeFoop, null, this);
+    this.physics.add.collider(platforms, stars);
+    this.physics.add.collider(stars, spikes);
 
     // Create player animations
     this.anims.create({
@@ -77,36 +93,110 @@ function create(){
     });
 
     // Setup the camera
-    this.cameras.main.startFollow(player, true);
-    this.cameras.main.setZoom(2);
+    this.cameras.main.scrollY = 0;
+    this.cameras.main.setZoom(0.8); // 0.3 debug, 0.8 develop
+    cam = this.cameras.main
+
+    // Setup score text
+    scoreText = this.add.text(10, 50, 'Score: 0', {fontSize:'36px', fill:'#301'}).setScrollFactor(0, 1);
 }
 
+var current_chunk = 0;
+
 function update(){
+    this.cameras.main.scrollX = player.x-400;
     cursors = this.input.keyboard.createCursorKeys();
 
-    if (cursors.left.isDown)
-    {
-        player.setVelocityX(-160);
-  
+    // Check for left/right motion
+    if (cursors.left.isDown){
+        player.setVelocityX(-200);
         player.anims.play('left', true);
     }
-    else if (cursors.right.isDown)
-    {
-        player.setVelocityX(160);
-  
+    else if (cursors.right.isDown){
+        player.setVelocityX(200);
         player.anims.play('right', true);
     }
-    else
-    {
-      //  player.setVelocityX(0);
-  
+    else{
+        player.setVelocityX(0);
         player.anims.play('turn');
     }
   
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.setVelocityY(-2000);
+    // Check for jump
+    if (cursors.up.isDown && player.body.touching.down){
+        player.setVelocityY(-1000);
     }
+
+    // Check if you fell off
+    if(player.y > 680){
+        player.setTint(0xff0000);
+        player.anims.play('turn');
+        gameOver = true;
+        this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
+        exit();
+    }
+
+    // Check if the player has reached the second half
+    if(player.x >= current_chunk*800+300){
+        generate_chunk(this);
+    }
+
+    // Score text
+    scoreText.setText('Score: '+score.toString());
+}
+
+function generate_chunk(that){
+    // Add more sky (background)
+    next_x_center = (400+(current_chunk+1)*800)
+    that.add.image(next_x_center, 300, 'sky').setDepth(-1);
+
+    // Add more ground
+    platforms.create(next_x_center, 603, 'ground').setScale(2).refreshBody();
+
+    // Add platforms
+    num_to_create = Math.round(Phaser.Math.FloatBetween(1, 4));
+    console.log('Creating ' + num_to_create.toString() + ' platforms');
+    for(i = 0; i < num_to_create; i++){
+      x = Math.round(Phaser.Math.FloatBetween(0, 800))+(current_chunk+1)*800;
+      y = Math.round(Phaser.Math.FloatBetween(60, 540));
+      //console.log('Creating at ('+x.toString()+','+y.toString()+')');
+      platforms.create(x, y, 'ground');
+    }
+    platforms.children.iterate(function (child) {
+        child.setDepth(1);
+    });
+
+    // Add clouds
+    clouds.create(400, 300, 'small_cloud').body.setAllowGravity(false);
+
+    // Add stars
+    num_of_stars = Math.round(Phaser.Math.FloatBetween(0, 12));
+    console.log('Creating ' + num_of_stars.toString() + ' stars');
+    for(i = 0; i < num_of_stars; i++){
+        x = Math.round(Phaser.Math.FloatBetween(0, 800))+(current_chunk+1)*800;
+        stars.create(x, 0, 'star');
+    }
+
+    // Add spikes
+    num_of_spikes = Math.round(Phaser.Math.FloatBetween(0, 2));
+    console.log('Creating ' + num_of_spikes.toString() + ' spikes');
+    for(i = 0; i < num_of_spikes; i++){
+        x = Math.round(Phaser.Math.FloatBetween(200, 800))+(current_chunk+1)*800;
+        y = Math.round(Phaser.Math.FloatBetween(0, 1))
+        if(y == 0){y = 0}
+        else{y = 550}
+        console.log('Creating at x='+x.toString());
+        spikes.create(x, y, 'spikes');
+    }
+    spikes.children.iterate(function (child){
+        child.setDepth(1);
+    })
+
+    // Increase the chunks
+    current_chunk += 1;
+
+    // Bring the player to the front
+    player.setDepth(1);
+    console.log('Made more terrain')
 }
 
 function collectStar(player, star){
@@ -116,6 +206,7 @@ function collectStar(player, star){
 }
 
 function boomBoyByeFoop(player, bomb) {
+    console.log('DEAD')
     this.physics.pause();
     player.setTint(0xff0000);
     player.anims.play('turn');
