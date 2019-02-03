@@ -36,9 +36,30 @@ function create(){
     this.cameras.main.startFollow(player, true);
     //this.cameras.main.setZoom(1.5);
 
+    // Check for user input
     cursors = this.input.keyboard.createCursorKeys();
 
-    this.add.circle(1983, 1022, 15, 0x000000)
+
+    // Setup a group for the level stations
+    levels = this.physics.add.staticGroup();
+
+    // Bowdoin
+    bowdoin = this.add.circle(1983, 1022, 15, 0x000000);
+    bowdoin.name = 'Bowdoin'
+    levels.add(bowdoin);
+
+    // Government center
+    government_center = this.add.circle(2148, 1187, 15, 0x000000);
+    government_center.name = 'Government Center'
+    levels.add(government_center);
+
+    // Setup collider
+    this.physics.add.overlap(player, levels, selectlevel, null, this);
+}
+
+function selectlevel(player, level){
+    //console.log(player);
+    console.log(level.name);
 }
 
 function update(){
