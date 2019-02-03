@@ -144,7 +144,9 @@ function boomBoyByeFoop(player, bomb) {
   player.setTint(0xff0000);
   player.anims.play('turn');
   gameOver = true;
-  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
+  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
+  status = (score > 175) ? "complete" : "fail";
+  sessionStorage.setItem("govcenter", status);
   exit();
 }
 
