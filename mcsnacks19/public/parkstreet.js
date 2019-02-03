@@ -38,8 +38,8 @@ function preload(){
 
 function create(){
     this.add.image(400, 300, 'sky');
-    this.add.text(100, 400, 'Watch out for \nspikes and bombs!', {fontSize:'40px'})
-    this.add.text(550, 300, 'Collect stars!', {fontSize:'40px'})
+    this.add.text(100, 200, 'Watch out for \nspikes and bombs!', {fontSize:'40px'})
+    this.add.text(100, 400, 'Collect 300 points!', {fontSize:'40px'})
 
     // Create a static group to hold the platforms
     platforms = this.physics.add.staticGroup();
