@@ -142,7 +142,8 @@ function getBriefcase(player, briefcase) {
 }
 
 function portalOut(player, portal){
-  window.location.href = '/map'
+  this.physics.pause();
+  window.location.href = '/map';
 }
 
 function switchDir(slime, wall) {
