@@ -29,8 +29,9 @@ function preload() {
   this.load.image('portal', 'assets/portal.png')
 
   this.load.spritesheet('slime', 'assets/DungeonSlime.png',
-    { frameWidth: 20, frameHeight: 28 }
+    { frameWidth: 28, frameHeight: 17 }
   );
+  this.load.image('wall', 'assets/invisible_wall.png');
 }
 
 function create() {
@@ -46,11 +47,17 @@ function create() {
   briefcase.create(675, 182, 'briefcase');
 
   player = this.physics.add.sprite(100, 450, 'dude');
+  slime = this.physics.add.sprite(500, 300, 'slime');
 
   player.setBounce(0.2);
   player.setCollideWorldBounds(true);
   player.body.setGravityY(400);
   this.physics.add.collider(player, platforms);
+
+  slime.setBounce(0.2);
+  slime.setCollideWorldBounds(true);
+  slime.body.setGravityY(400);
+  this.physics.add.collider(slime, platforms);
 
   this.anims.create({
     key: 'left',
@@ -73,22 +80,34 @@ function create() {
   });
 
   this.anims.create({
-    key: 'right',
+    key: 'slime_right',
     frames: this.anims.generateFrameNumbers('slime', { start: 0, end: 2 }),
     frameRate: 10,
     repeat: -1
   });
 
   this.anims.create({
-    key: 'left',
-    frames: this.anims.generateFrameNumbers('slime', { start: 2, end: 5 }),
+    key: 'slime_turn',
+    frames: [ { key: 'slime', frame: 0 } ],
+    frameRate: 20
+  });
+
+  this.anims.create({
+    key: 'slime_left',
+    frames: this.anims.generateFrameNumbers('slime', { start: 3, end: 5 }),
     frameRate: 10,
     repeat: -1
   });
 
   this.physics.add.overlap(player, briefcase, getBriefcase, null, this);
 
-  slime = this.physics.add.sprite(100, 450, 'slime');
+  walls = this.physics.add.staticGroup();
+  walls.create(400, 375, 'wall');
+  walls.create(798, 375, 'wall');
+  this.physics.add.overlap(slime, walls, switchDir, null, this);
+  this.physics.add.overlap(player, slime, slimed, null, this);
+  slime.setVelocityX(100);
+  slime.anims.play('slime_right');
 }
 
 function update() {
@@ -124,4 +143,31 @@ function getBriefcase(player, briefcase) {
 
 function portalOut(player, portal){
   window.location.href = '/map'
+}
+
+function switchDir(slime, wall) {
+  slime.body.velocity.x *= -1;
+  if (slime.body.velocity.x > 0) {
+    slime.anims.play('slime_right');
+  } else {
+    slime.anims.play('slime_left');
+  }
+}
+
+function slimed(player, slime) {
+  this.physics.pause();
+  player.setTint(0xff0000);
+  player.anims.play('turn');
+  gameOver = true;
+  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
+  exit();
+}
+
+async function exit(){
+  await sleep(2000);
+  window.location.href = '/map'
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
