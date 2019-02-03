@@ -16,6 +16,8 @@ var config = {
   }
 };
 
+var socket = io();
+
 var game = new Phaser.Game(config);
 
 function preload() {
@@ -143,7 +145,9 @@ function getBriefcase(player, briefcase) {
 
 function portalOut(player, portal){
   this.physics.pause();
-  window.location.href = '/map';
+  socket.emit('bowdoin', 'completed');
+  sessionStorage.setItem("bowdoin", "complete");
+  exit();
 }
 
 function switchDir(slime, wall) {
@@ -160,7 +164,9 @@ function slimed(player, slime) {
   player.setTint(0xff0000);
   player.anims.play('turn');
   gameOver = true;
-  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000})
+  this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
+  socket.emit('bowdoin', 'fail');
+  sessionStorage.setItem("bowdoin", "fail");
   exit();
 }
 

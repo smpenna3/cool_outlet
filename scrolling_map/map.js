@@ -42,7 +42,13 @@ function create(){
     levels = this.physics.add.staticGroup();
 
     // Bowdoin
-    bowdoin = this.add.circle(1983, 1022, 15, 0x000000);
+    status = sessionStorage.getItem('bowdoin');
+    if (status == 'complete') {
+      color = 0x31c438;
+    } else {
+      color = 0x000000;
+    }
+    bowdoin = this.add.circle(1983, 1022, 15, color);
     bowdoin.name = 'Bowdoin'
     bowdoin.file = 'bowdoin'
     levels.add(bowdoin);
