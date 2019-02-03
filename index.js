@@ -16,4 +16,6 @@ app.get('/hi', (req, res) => res.send('Hello World!'))
 app.get('/hello', (req, res) => res.sendFile(path.join(__dirname+'/public/hello.html')))
 app.get('/pickle', (req, res) => res.sendFile(path.join(__dirname+'/public/pickel.html')))
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT || port, function() {
+	console.log(`Example app listening on port ${port}!`);
+});
