@@ -25,9 +25,10 @@ function preload(){
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('star', 'assets/star.png');
-    this.load.image('bomb', 'assets/bomb.png');
     this.load.image('spikes', 'assets/spikes.png');
     this.load.image('large_cloud', 'assets/cloud_large.png');
+    this.load.image('bomb', 'assets/bomb_omb.png') // Large bomb
+    //this.load.image('bomb', 'assets/bomb.png'); // Small bomb
     this.load.image('small_cloud', 'assets/cloud_small.png');
     this.load.spritesheet('dude',
         'assets/dude.png',
@@ -136,7 +137,7 @@ function update(){
     }
 
     // Check if the player has reached the second half
-    if(player.x >= current_chunk*800+300){
+    if(player.x >= current_chunk*800+200){
         generate_chunk(this);
     }
 
@@ -192,7 +193,15 @@ function generate_chunk(that){
     })
 
     // Add bombs
-
+    num_of_bombs = Math.round(Phaser.Math.FloatBetween(0, 3));
+    console.log('Creating ' + num_of_bombs.toString() + ' bombs');
+    for(i = 0; i < num_of_bombs; i++){
+        x = Math.round(Phaser.Math.FloatBetween(0, 800))+(current_chunk+1)*800;
+        y = Math.round(Phaser.Math.FloatBetween(0, 600));
+        x_vel = Phaser.Math.FloatBetween(-80, -10);
+        boun = Phaser.Math.FloatBetween(0.8, 0.99)
+        bombs.create(x, y, 'bomb').setVelocityX(x_vel).setBounceY(boun);
+    }
 
     // Increase the chunks
     current_chunk += 1;
