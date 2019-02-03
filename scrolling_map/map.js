@@ -31,8 +31,7 @@ function create(){
     //this.cameras.main.setBounds(0, 0, 3500, 3500);
 
     player = this.physics.add.image(1982, 1123, 'player');
-    //player = this.add.circle(1982, 1123, 20, 0xf0f000)
-
+    
     this.cameras.main.startFollow(player, true);
     //this.cameras.main.setZoom(1.5);
 
@@ -71,41 +70,66 @@ function create(){
     this.physics.add.overlap(player, levels, selectlevel, null, this);
 }
 
-function selectlevel(player, level){
-    //console.log(player);
-    console.log(level.name);
+var lastHit = 0;
 
-    if(confirm('Do you want to go to '+level.name+'?')){
-        console.log('Moving to '+level.file);
+function selectlevel(player, level){
+    player.setVelocityX(0);
+    player.setVelocityY(0);
+
+    // Make sure more than three seconds has passed since last hit
+    if(Date.now() - lastHit > 3000){
+        if(confirm('Do you want to go to '+level.name+'?')){
+            console.log('Moving to '+level.file);
+        }
+        lastHit = Date.now();
     }
 }
 
 function update(){
-    if (cursors.up.isDown){
-        player.setVelocityY(-velocity)
+    if(cursors.up.isDown && cursors.right.isDown){
+        player.setVelocityY(-velocity);
+        player.setVelocityX(velocity);
+        player.rotation = -45;
+    }
+    else if(cursors.up.isDown && cursors.left.isDown){
+        player.setVelocityY(-velocity);
+        player.setVelocityX(-velocity);
+        player.rotation = 45;
+    }
+    else if(cursors.down.isDown && cursors.right.isDown){
+        player.setVelocityY(velocity);
+        player.setVelocityX(velocity);
+        player.rotation = 45;
+    }
+    else if(cursors.down.isDown && cursors.left.isDown){
+        player.setVelocityY(velocity);
+        player.setVelocityX(-velocity);
+        player.rotation = -45;
+    }
+    else if (cursors.up.isDown){
+        player.setVelocityY(-velocity);
+        player.setVelocityX(0);
+        player.rotation = 1.57;
     }
     else if (cursors.down.isDown){
-        player.setVelocityY(velocity)
+        player.setVelocityY(velocity);
+        player.setVelocityX(0);
+        player.rotation = 1.57;
     }
-    else{
+    else if (cursors.left.isDown){
+        player.setVelocityX(-velocity);
         player.setVelocityY(0);
-    }
-
-    if (cursors.left.isDown){
-        player.setVelocityX(-velocity)
+        player.rotation = 0;
     }
     else if (cursors.right.isDown){
-        player.setVelocityX(velocity)
-    }
-    else{
-        player.setVelocityX(0);
+        player.setVelocityX(velocity);
+        player.setVelocityY(0);
+        player.rotation = 0;
     }
 
-    if(cursors.space.isDown){
-        player.x = 1982;
-        player.x = 1123;
-        player.setVelocityY(0);
+    else{
         player.setVelocityX(0);
+        player.setVelocityY(0);
     }
 }
 
