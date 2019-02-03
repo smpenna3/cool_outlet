@@ -44,25 +44,25 @@ function create(){
     // Bowdoin
     bowdoin = this.add.circle(1983, 1022, 15, 0x000000);
     bowdoin.name = 'Bowdoin'
-    bowdoin.file = 'bowdoin.html'
+    bowdoin.file = 'bowdoin'
     levels.add(bowdoin);
 
     // Government center
     government_center = this.add.circle(2148, 1188.5, 15, 0x000000);
     government_center.name = 'Government Center'
-    government_center.file = 'govcenter.html'
+    government_center.file = 'govcenter'
     levels.add(government_center);
 
     // Park Street
     park_street = this.add.circle(1983, 1355, 15, 0x000000);
     park_street.name = 'Park Street'
-    park_street.file = 'parkstreet.html'
+    park_street.file = 'parkstreet'
     levels.add(park_street);
 
     // Haymarket
     haymarket = this.add.circle(2313, 1022, 15, 0x000000);
     haymarket.name = 'Haymarket'
-    haymarket.file = 'haymarket.html'
+    haymarket.file = 'haymarket'
     levels.add(haymarket);
 
     // Setup collider
@@ -79,6 +79,7 @@ function selectlevel(player, level){
     if(Date.now() - lastHit > 3000){
         if(confirm('Do you want to go to '+level.name+'?')){
             console.log('Moving to '+level.file);
+            window.location.href = '/'+level.file;
         }
         lastHit = Date.now();
     }

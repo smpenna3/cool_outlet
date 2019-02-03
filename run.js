@@ -7,5 +7,6 @@ app.use(express.static('scrolling_map'))
 
 app.get('/hi', (req, res) => res.send('Hello World!'))
 app.get('/map', (req, res) => res.sendFile(path.join(__dirname+'/scrolling_map/map.html')))
+app.get('/bowdoin', (req, res) => res.sendFile(path.join(__dirname+'/mcsnacks19/public/bowdoin.html')))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
