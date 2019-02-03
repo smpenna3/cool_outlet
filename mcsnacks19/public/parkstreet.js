@@ -132,8 +132,10 @@ function update(){
         player.setTint(0xff0000);
         player.anims.play('turn');
         gameOver = true;
-        this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
-        sessionStorage.setItem("govcenter", "fail");
+        msg = (score > 300) ? "YOU WIN" : "YOU LOSE";
+        this.add.text(400, 300, msg, {fontsize:'128px', fill:0xff0000});
+        status = (msg == "YOU WIN") ? "complete" : "fail";
+        sessionStorage.setItem("parkstreet", status);
         exit();
     }
 
@@ -224,8 +226,10 @@ function boomBoyByeFoop(player, bomb) {
     player.setTint(0xff0000);
     player.anims.play('turn');
     gameOver = true;
-    this.add.text(400, 300, 'YOU LOSE', {fontsize:'128px', fill:0xff0000});
-    sessionStorage.setItem("parkstreet", "fail");
+    msg = (score > 300) ? "YOU WIN" : "YOU LOSE";
+    this.add.text(400, 300, msg, {fontsize:'128px', fill:0xff0000});
+    status = (msg == "YOU WIN") ? "complete" : "fail";
+    sessionStorage.setItem("parkstreet", status);
     exit();
 }
 
