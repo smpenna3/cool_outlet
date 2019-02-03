@@ -151,7 +151,7 @@ function collectStar(player, star) {
     console.log('Creating ' + num_to_create.toString() + ' platforms');
     for(i = 1; i < num_to_create; i++){
       x = Math.round(Phaser.Math.FloatBetween(0, 800));
-      y = Math.round(Phaser.Math.FloatBetween(0, 540));
+      y = Math.round(Phaser.Math.FloatBetween(60, 540));
       console.log('Creating at ('+x.toString()+','+y.toString()+')');
       platforms.create(x, y, 'ground');
     }
