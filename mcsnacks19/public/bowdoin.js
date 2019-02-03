@@ -87,6 +87,8 @@ function create() {
   });
 
   this.physics.add.overlap(player, briefcase, getBriefcase, null, this);
+
+  slime = this.physics.add.sprite(100, 450, 'slime');
 }
 
 function update() {
