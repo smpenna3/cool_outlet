@@ -10,6 +10,7 @@ app.get('/hi', (req, res) => res.send('Hello World!'))
 app.get('/map', (req, res) => res.sendFile(path.join(__dirname+'/scrolling_map/map.html')))
 app.get('/bowdoin', (req, res) => res.sendFile(path.join(__dirname+'/mcsnacks19/public/bowdoin.html')))
 app.get('/govcenter', (req, res) => res.sendFile(path.join(__dirname+'/mcsnacks19/public/govcenter.html')))
+app.get('/parkstreet', (req, res) => res.sendFile(path.join(__dirname+'/mcsnacks19/public/parkstreet.html')))
 
 app.listen(process.env.PORT || port, function() {
 	console.log(`Example app listening on port ${port}!`);
