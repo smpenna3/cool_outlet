@@ -65,6 +65,36 @@ function create(){
     haymarket.file = 'haymarket'
     levels.add(haymarket);
 
+    // State
+    state = this.add.circle(2313, 1355, 15, 0x000000);
+    state.name = 'State'
+    state.file = 'state'
+    levels.add(state);
+
+    // North Station
+    north_station = this.add.circle(2313, 858, 15, 0x000000);
+    north_station.name = 'North Station'
+    north_station.file = 'north'
+    levels.add(north_station);
+
+    // Charles
+    charles = this.add.circle(1820, 1188.5, 15, 0x000000);
+    charles.name = 'Charles/MGh'
+    charles.file = 'charles'
+    levels.add(charles);
+
+    // Downtown Crossing
+    downtown = this.add.circle(2148, 1518, 15, 0x000000);
+    downtown.name = 'Downtown Crossing'
+    downtown.file = 'downtown'
+    levels.add(downtown);
+
+    // Acquarium
+    acquarium = this.add.circle(2476, 1188.5, 15, 0x000000)
+    acquarium.name = 'Acquarium'
+    acquarium.file = 'acquarium'
+    levels.add(acquarium)
+
     // Setup collider
     this.physics.add.overlap(player, levels, selectlevel, null, this);
 }
