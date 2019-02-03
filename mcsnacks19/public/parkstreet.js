@@ -14,7 +14,7 @@ var config = {
         create: create,
         update: update
     }
-    };
+};
 
 var score = 0;
 var scoreText;
@@ -192,7 +192,7 @@ function generate_chunk(that){
     })
 
     // Add bombs
-    
+
 
     // Increase the chunks
     current_chunk += 1;
