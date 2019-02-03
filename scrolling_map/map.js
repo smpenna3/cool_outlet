@@ -13,8 +13,7 @@ var config = {
     scene: {
         preload: preload,
         create: create,
-        update: update,
-        render: render
+        update: update
     }
 };
 
@@ -131,7 +130,4 @@ function update(){
         player.setVelocityX(0);
         player.setVelocityY(0);
     }
-}
-
-function render(){
 }
